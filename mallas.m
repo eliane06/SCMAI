@@ -104,12 +104,14 @@
 
 %############### MALLA DE CALIFICICACIONES(importando datos)###############
 %Creación malla de vulnerabilidad nueva
-vul = 5.*d_c + 4.*r_c + 3.*a_c + 2.*s_c + 1.*t_c + 3.*c_c + 5.*p_c + 5.*lu + 5.*vp_c;
+vul = 5.*d_c + 4.*r_c + 3.*a_c + 2.*s_c + 1.*t_c + 3.*c_c + 5.*p_c + 5.*lu_c + 5.*vp_c;
 vul = transpose(vul);
 vul = reshape(vul, [], 1);
 max(vul)
 nit = transpose(nt2006);
 nit = reshape(nit, [], 1);
+nit2 = transpose(nt2010);
+nit2 = reshape(nit2, [], 1);
 d = transpose(d);
 d = reshape(d,[], 1);
 r = transpose(r);
@@ -130,11 +132,13 @@ vp = transpose(vp);
 vp = reshape(vp,[], 1);
 risk = (vul.*nit)/(max(vul));
 %Creación de matriz de entrada y salida
-subset = [];
-subset = [subset d r a s t c lu vp risk zeros(420660,1) zeros(420660,1)];
+subsetT = [];
+%subsetT = [subsetT d r a s t c p lu vp risk zeros(420660,1) zeros(420660,1)];
+subsetT = [subsetT d r a s t c p lu vp risk nit nit2];
 %subset(:,7) = ((subset(:, 7)).*nit)/145;
 %subset = [subset nit];
-%[subsett, ia, ic] = unique(subset,'rows','stable'); %si para que ande
+[subset, ia, ic] = unique(subsetT,'rows','stable'); %si para que ande
 
+[rho,pval] = corr(subset(:,11),subset(:,12),'Type','Spearman')
 
 
